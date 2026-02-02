@@ -12,168 +12,251 @@
         <div class="profile-card">
             <div class="profile-header">
                 <div class="profile-avatar">
-                    <span class="avatar-glyph">{{ formData()?.fullName?.charAt(0) || 'T' }}</span>
+                    @if (tuViChart()?.gender === 'Nam') {
+                    <img src="avatar-male.png" alt="Nam" class="avatar-image">
+                    } @else {
+                    <img src="avatar-female.png" alt="Nữ" class="avatar-image">
+                    }
                 </div>
                 <div class="profile-info">
-                    <h1 class="profile-name">{{ formData()?.fullName }}</h1>
+                    <h1 class="profile-name">{{ tuViChart()?.fullName }}</h1>
+                    <div class="profile-meta">
+                        <span class="meta-item">
+                            <span class="material-symbols-outlined">person</span>
+                            {{ tuViChart()?.gender }}
+                        </span>
+                        <span class="meta-item">
+                            <span class="material-symbols-outlined">pets</span>
+                            {{ tuViChart()?.zodiacSign }}
+                        </span>
+                        <span class="meta-item element">
+                            <span class="material-symbols-outlined">spa</span>
+                            {{ tuViChart()?.fiveElement }}
+                        </span>
+                    </div>
                     <div class="profile-dates">
                         <span class="date-item">
                             <span class="material-symbols-outlined">calendar_today</span>
-                            Dương lịch: {{ formData()?.birthDate }}
+                            Dương lịch: {{ tuViChart()?.solarDate }}
                         </span>
                         <span class="date-item lunar">
                             <span class="material-symbols-outlined">dark_mode</span>
-                            Âm lịch: (Sẽ được tính toán)
+                            Âm lịch: {{ tuViChart()?.lunarDate }}
                         </span>
                     </div>
                 </div>
                 <div class="profile-actions">
+                    <button class="action-btn" (click)="goBack()">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
                     <button class="action-btn" (click)="printResult()">
                         <span class="material-symbols-outlined">print</span>
-                        In
                     </button>
                     <button class="action-btn" (click)="shareResult()">
                         <span class="material-symbols-outlined">share</span>
-                        Chia sẻ
                     </button>
                 </div>
             </div>
-            <div class="profile-quote">
-                <span class="quote-icon">"</span>
-                <p>Đức năng thắng số, nhân định thắng thiên</p>
+
+            <!-- Year Selector -->
+            <div class="year-selector">
+                <label for="yearSelect">Năm xem:</label>
+                <select id="yearSelect" [(ngModel)]="selectedYear" (change)="onYearChange()">
+                    @for (year of availableYears; track year) {
+                    <option [value]="year">{{ year }}</option>
+                    }
+                </select>
+                @if (tuViChart()?.horoscope?.age?.nominalAge) {
+                <span class="age-info">( {{ tuViChart()?.horoscope?.age?.nominalAge }} tuổi )</span>
+                }
+            </div>
+
+            <!-- Master Info Row -->
+            <div class="master-info">
+                <div class="info-item">
+                    <span class="info-label">Mệnh Chủ</span>
+                    <span class="info-value">{{ tuViChart()?.soulStar }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Thân Chủ</span>
+                    <span class="info-value">{{ tuViChart()?.bodyStar }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Cục</span>
+                    <span class="info-value">{{ tuViChart()?.fiveElement }}</span>
+                </div>
+                <div class="info-item tuan">
+                    <span class="info-label">Tuần</span>
+                    <span class="info-value">{{ tuViChart()?.tuanTriet?.tuan?.join(' - ') || 'N/A' }}</span>
+                </div>
+                <div class="info-item triet">
+                    <span class="info-label">Triệt</span>
+                    <span class="info-value">{{ tuViChart()?.tuanTriet?.triet?.join(' - ') || 'N/A' }}</span>
+                </div>
             </div>
         </div>
 
-        <!-- Result Grid -->
-        <div class="result-grid">
-            <div class="result-column">
-                <!-- Fortune Card -->
-                <div class="insight-card fortune-card">
-                    <div class="card-header">
-                        <h2>
-                            <span class="material-symbols-outlined">stars</span>
-                            Vận Mệnh Tổng Quan
-                        </h2>
-                        <span class="card-badge good">Tốt</span>
-                    </div>
-                    <div class="fortune-meter">
-                        <div class="meter-track">
-                            <div class="meter-fill" [style.width.%]="fortuneLevel()"></div>
-                        </div>
-                        <div class="meter-labels">
-                            <span>Xấu</span>
-                            <span>Trung bình</span>
-                            <span>Tốt</span>
-                        </div>
-                    </div>
-                    <div class="fortune-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">Công danh</span>
-                            <div class="stat-bar">
-                                <div class="stat-fill" style="width: 85%"></div>
-                            </div>
-                            <span class="stat-value">85%</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Tình duyên</span>
-                            <div class="stat-bar">
-                                <div class="stat-fill" style="width: 72%"></div>
-                            </div>
-                            <span class="stat-value">72%</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Tài lộc</span>
-                            <div class="stat-bar">
-                                <div class="stat-fill" style="width: 68%"></div>
-                            </div>
-                            <span class="stat-value">68%</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Sức khỏe</span>
-                            <div class="stat-bar">
-                                <div class="stat-fill" style="width: 90%"></div>
-                            </div>
-                            <span class="stat-value">90%</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Tu Vi Chart Grid -->
+        <div class="chart-container">
+            <h2 class="chart-title">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                Lá Số Tử Vi
+            </h2>
 
-                <!-- Interpretation Card -->
-                <div class="insight-card">
-                    <div class="card-header">
-                        <h2>
-                            <span class="material-symbols-outlined">auto_stories</span>
-                            Giải Đoán Chi Tiết
-                        </h2>
-                    </div>
-                    <div class="interpretation-content">
-                        <div class="interpretation-section">
-                            <h3>
-                                <span class="section-icon">🏛️</span>
-                                Mệnh Cung
-                            </h3>
-                            <p>
-                                Mệnh cung của bạn có <strong>Tử Vi</strong> tọa thủ, đây là cách tốt nhất trong Tử Vi
-                                Đẩu Số.
-                                Người có mệnh này thường có tư cách lãnh đạo, được người khác tôn trọng.
-                            </p>
-                        </div>
-                        <div class="interpretation-section">
-                            <h3>
-                                <span class="section-icon">💼</span>
-                                Sự Nghiệp
-                            </h3>
-                            <p>
-                                Quan lộc cung có <strong>Thiên Phủ</strong> chiếu, cho thấy sự nghiệp vững vàng,
-                                có thể phát triển trong các lĩnh vực quản lý, tài chính hoặc kinh doanh.
-                            </p>
-                        </div>
-                        <div class="interpretation-section">
-                            <h3>
-                                <span class="section-icon">❤️</span>
-                                Tình Duyên
-                            </h3>
-                            <p>
-                                Phu thê cung có <strong>Thái Âm</strong> tọa thủ, tình duyên êm đềm,
-                                phù hợp với người có tính cách điềm tĩnh, hiền lành.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <!-- Legend -->
+            <div class="chart-legend">
+                <span class="legend-item"><span class="dot brightness-m"></span> Miếu</span>
+                <span class="legend-item"><span class="dot brightness-v"></span> Vượng</span>
+                <span class="legend-item"><span class="dot brightness-d"></span> Đắc</span>
+                <span class="legend-item"><span class="dot brightness-b"></span> Bình</span>
+                <span class="legend-item"><span class="dot brightness-h"></span> Hãm</span>
+                <span class="legend-item mutagen-legend"><span class="mutagen-dot">祿</span> Hóa</span>
             </div>
 
-            <div class="result-column">
-                <!-- Chart Card (Placeholder) -->
-                <div class="insight-card chart-card">
-                    <div class="card-header">
-                        <h2>
-                            <span class="material-symbols-outlined">grid_view</span>
-                            Lá Số Tử Vi
-                        </h2>
+            <div class="tuvi-chart-grid">
+                @for (gridIndex of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]; track gridIndex) {
+                @if (isCenterCell(gridIndex)) {
+                <!-- Center cells for chart info -->
+                <div class="palace-cell center-cell">
+                    @if (gridIndex === 5) {
+                    <div class="center-info">
+                        <span class="info-label">Can Chi</span>
+                        <span class="info-value">{{ tuViChart()?.chineseDate }}</span>
                     </div>
-                    <div class="chart-placeholder">
-                        <div class="placeholder-grid">
-                            @for (i of [1,2,3,4,5,6,7,8,9,10,11,12]; track i) {
-                            <div class="palace-cell">
-                                <span class="palace-name">Cung {{ i }}</span>
-                            </div>
+                    } @else if (gridIndex === 6) {
+                    <div class="center-info">
+                        <span class="info-label">Giờ sinh</span>
+                        <span class="info-value">{{ tuViChart()?.time }} ({{ tuViChart()?.timeRange }})</span>
+                    </div>
+                    } @else if (gridIndex === 9) {
+                    <div class="center-info horoscope-info">
+                        <span class="info-label">Đại Vận</span>
+                        <span class="info-value">{{ tuViChart()?.horoscope?.decadal?.name }}</span>
+                    </div>
+                    } @else if (gridIndex === 10) {
+                    <div class="center-info horoscope-info">
+                        <span class="info-label">Lưu Niên {{ selectedYear }}</span>
+                        <span class="info-value">{{ tuViChart()?.horoscope?.yearly?.name }}</span>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <!-- Palace cells -->
+                @let palaceIndex = palaceGridOrder[gridIndex];
+                @let palace = getPalaceByPosition(palaceIndex);
+                <div class="palace-cell" [class.life-palace]="palace?.nameVi === 'Mệnh'"
+                    [class.body-palace]="palace?.isBodyPalace" [class.decadal-palace]="isDecadalPalace(palaceIndex)"
+                    [class.yearly-palace]="isYearlyPalace(palaceIndex)" [class.vo-chinh-dieu]="isVoChinhDieu(palace)">
+
+                    <!-- Header: Can/Chi | Palace Name | Age -->
+                    <div class="palace-header-row">
+                        <span class="header-left">{{ palace?.heavenlyStem }}.{{ palace?.earthlyBranch }}</span>
+                        <span class="header-center" [class.life-name]="palace?.nameVi === 'Mệnh'">
+                            {{ palace?.nameVi }}
+                            @if (palace?.isBodyPalace) { <small>身</small> }
+                        </span>
+                        <span class="header-right">{{ palace?.decadal?.range?.[0] }}<br><small>Th.{{ palace?.index
+                                }}</small></span>
+                    </div>
+
+                    <!-- Stars: Left column (Major) | Right column (Minor/Adjective) -->
+                    <div class="stars-two-columns">
+                        <div class="stars-left">
+                            @if (isVoChinhDieu(palace)) {
+                            <span class="vo-chinh-dieu-label">Vô Chính Diệu</span>
+                            } @else {
+                            @for (star of palace?.majorStars || []; track star.name) {
+                            <span class="star-item major">{{ star.name }}
+                                @if (star.brightnessShort) {<small>({{ star.brightnessShort }})</small>}
+                            </span>
+                            }
                             }
                         </div>
-                        <p class="placeholder-note">
-                            <span class="material-symbols-outlined">info</span>
-                            Lá số chi tiết sẽ được hiển thị khi kết nối với backend
-                        </p>
+                        <div class="stars-right">
+                            @for (star of palace?.minorStars || []; track star.name) {
+                            <span class="star-item" [class.good]="isLuckyStar(star)" [class.bad]="!isLuckyStar(star)">
+                                {{ star.name }}
+                                @if (star.brightnessShort) {<small>({{ star.brightnessShort }})</small>}
+                            </span>
+                            }
+                            @for (star of palace?.adjectiveStars || []; track star.name) {
+                            <span class="star-item adjective">{{ star.name }}</span>
+                            }
+                            <!-- 12 Series Stars -->
+                            @if (palace?.boshi12) {
+                            <span class="star-item twelve">{{ palace?.boshi12 }}</span>
+                            }
+                            @if (palace?.jiangqian12) {
+                            <span class="star-item twelve">{{ palace?.jiangqian12 }}</span>
+                            }
+                            @if (palace?.suiqian12) {
+                            <span class="star-item twelve">{{ palace?.suiqian12 }}</span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Footer: ĐV.X | Trường Sinh | Tuần/Triệt | LN.X -->
+                    <div class="palace-footer-row">
+                        <span class="footer-left">
+                            @if (isDecadalPalace(palaceIndex)) { ĐV.{{ palace?.nameVi }} }
+                        </span>
+                        <span class="footer-center">
+                            @if (palace?.changsheng12) { {{ palace?.changsheng12 }} }
+                        </span>
+                        <span class="footer-labels">
+                            @if (isTuanPalace(palace)) {
+                            <span class="tuan-label">Tuần</span>
+                            }
+                            @if (isTrietPalace(palace)) {
+                            <span class="triet-label">Triệt</span>
+                            }
+                        </span>
+                        <span class="footer-right">
+                            @if (isYearlyPalace(palaceIndex)) { LN.{{ palace?.nameVi }} }
+                        </span>
                     </div>
                 </div>
+                }
+                }
             </div>
         </div>
 
-        <!-- Back Button -->
-        <div class="back-section">
-            <button class="back-btn" (click)="goBack()">
-                <span class="material-symbols-outlined">arrow_back</span>
-                Lập lá số mới
-            </button>
+        <!-- Analysis Cards -->
+        <div class="analysis-section">
+            <h2 class="section-title">
+                <span class="material-symbols-outlined">insights</span>
+                Phân Tích Tổng Quan
+            </h2>
+            <div class="analysis-grid">
+                <div class="analysis-card love">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </div>
+                    <h3>Tình Duyên</h3>
+                    <p>Cung Phu Thê cho biết vận mệnh tình cảm, hôn nhân và mối quan hệ đôi lứa.</p>
+                </div>
+                <div class="analysis-card career">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">work</span>
+                    </div>
+                    <h3>Sự Nghiệp</h3>
+                    <p>Cung Quan Lộc phản ánh con đường công danh, sự nghiệp và thành tựu xã hội.</p>
+                </div>
+                <div class="analysis-card wealth">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">payments</span>
+                    </div>
+                    <h3>Tài Lộc</h3>
+                    <p>Cung Tài Bạch thể hiện vận may về tiền bạc, tài sản và cách quản lý tiền.</p>
+                </div>
+                <div class="analysis-card health">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">health_and_safety</span>
+                    </div>
+                    <h3>Sức Khỏe</h3>
+                    <p>Cung Tật Ách báo hiệu về sức khỏe thể chất và các vấn đề cần lưu ý.</p>
+                </div>
+            </div>
         </div>
     </div>
     }
