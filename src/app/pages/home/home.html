@@ -1,0 +1,268 @@
+<section class="hero">
+    <div class="hero-content">
+        <!-- Social Proof Badges -->
+        <div class="hero-badges">
+            <div class="hero-badge">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                <span>AI-Powered</span>
+            </div>
+            <div class="hero-badge accent">
+                <span class="material-symbols-outlined">trending_up</span>
+                <span>1,234 lá số hôm nay</span>
+            </div>
+        </div>
+
+        <h1 class="hero-title">
+            Lập Lá Số Tử Vi
+            <span class="gradient-text">Chính Xác & Chi Tiết</span>
+        </h1>
+        <p class="hero-description">
+            Kết hợp tinh hoa tử vi cổ truyền và thuật toán hiện đại.
+            Nhập thông tin của bạn để nhận bản phân tích vận mệnh, công danh, và tình duyên.
+        </p>
+
+        <!-- Horoscope Form -->
+        <form class="horoscope-form" [formGroup]="horoscopeForm" (ngSubmit)="onSubmit()">
+            <!-- Form Progress Indicator (Zeigarnik Effect) -->
+            <div class="form-progress">
+                <div class="progress-step" [class.active]="isStep1Active()" [class.completed]="isStep1Completed()">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Thông tin</span>
+                </div>
+                <div class="progress-line" [class.active]="isStep1Completed()"></div>
+                <div class="progress-step" [class.active]="isStep2Active()" [class.completed]="isStep2Completed()">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Xác nhận</span>
+                </div>
+                <div class="progress-line" [class.active]="isStep2Completed()"></div>
+                <div class="progress-step" [class.active]="isStep3Active()">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Kết quả</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <!-- Họ và tên -->
+                <mat-form-field appearance="outline" class="custom-field">
+                    <mat-label>Họ và tên</mat-label>
+                    <input matInput formControlName="fullName" placeholder="Nguyễn Văn A">
+                    <mat-icon matPrefix>person</mat-icon>
+                    @if (horoscopeForm.get('fullName')?.hasError('required')) {
+                    <mat-error>Vui lòng nhập họ tên</mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Giới tính -->
+                <mat-form-field appearance="outline" class="custom-field">
+                    <mat-label>Giới tính</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option value="male">
+                            <span class="option-icon">👨</span> Nam
+                        </mat-option>
+                        <mat-option value="female">
+                            <span class="option-icon">👩</span> Nữ
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>wc</mat-icon>
+                </mat-form-field>
+
+                <!-- Ngày sinh -->
+                <mat-form-field appearance="outline" class="custom-field">
+                    <mat-label>Ngày sinh (Dương lịch)</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="birthDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-icon matPrefix>calendar_today</mat-icon>
+                </mat-form-field>
+
+                <!-- Giờ sinh -->
+                <mat-form-field appearance="outline" class="custom-field">
+                    <mat-label>Giờ sinh (12 Chi)</mat-label>
+                    <mat-select formControlName="birthTime">
+                        @for (time of timeOptions; track time.value) {
+                        <mat-option [value]="time.value">{{ time.label }}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-icon matPrefix>schedule</mat-icon>
+                </mat-form-field>
+
+                <!-- Nơi sinh -->
+                <mat-form-field appearance="outline" class="custom-field full-width">
+                    <mat-label>Nơi sinh</mat-label>
+                    <input matInput formControlName="birthPlace" placeholder="Hà Nội, Việt Nam">
+                    <mat-icon matPrefix>location_on</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="isSubmitting()">
+                @if (isSubmitting()) {
+                <span class="material-symbols-outlined rotating">autorenew</span>
+                <span>Đang lập lá số...</span>
+                } @else {
+                <span class="material-symbols-outlined">star</span>
+                <span>Lập Lá Số Ngay</span>
+                }
+            </button>
+
+            <p class="form-terms">
+                Bằng cách nhấn nút, bạn đồng ý với
+                <a routerLink="/dieu-khoan">Điều khoản sử dụng</a> của chúng tôi.
+            </p>
+        </form>
+    </div>
+
+    <!-- Zodiac Decoration -->
+    <div class="hero-decoration">
+        <div class="zodiac-circle">
+            <div class="zodiac-ring"></div>
+            <div class="zodiac-symbols">
+                @for (symbol of zodiacSymbols; track $index) {
+                <span class="zodiac-symbol" [style.--i]="$index + 1">{{ symbol }}</span>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">Tại sao chọn chúng tôi?</h2>
+        <div class="features-grid">
+            <!-- AI - Blue/Cyan -->
+            <div class="feature-card feature-blue">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">psychology</span>
+                </div>
+                <h3>Thuật toán AI</h3>
+                <p>Ứng dụng trí tuệ nhân tạo để phân tích và dự đoán chính xác hơn.</p>
+            </div>
+            <!-- Traditional - Gold -->
+            <div class="feature-card feature-gold">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">menu_book</span>
+                </div>
+                <h3>Tử Vi Cổ Truyền</h3>
+                <p>Dựa trên kinh điển Tử Vi Đẩu Số hàng ngàn năm của phương Đông.</p>
+            </div>
+            <!-- Accuracy - Emerald/Green -->
+            <div class="feature-card feature-emerald">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">verified</span>
+                </div>
+                <h3>Chính Xác 98%</h3>
+                <p>Hệ thống đã được kiểm chứng với hàng triệu lá số.</p>
+            </div>
+            <!-- Support - Teal -->
+            <div class="feature-card feature-teal">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">support_agent</span>
+                </div>
+                <h3>Hỗ Trợ 24/7</h3>
+                <p>Đội ngũ chuyên gia luôn sẵn sàng giải đáp thắc mắc.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section (Social Proof) -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">Người dùng nói gì về chúng tôi?</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img class="testimonial-avatar" src="avatars/tran-huong.png" alt="Trần Hương">
+                    <div class="testimonial-info">
+                        <span class="testimonial-name">Trần Hương</span>
+                        <span class="testimonial-role">Doanh nhân, Hà Nội</span>
+                    </div>
+                    <div class="testimonial-rating">
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">"Lá số phân tích rất chi tiết và chính xác. Giúp tôi hiểu rõ hơn về vận mệnh
+                    và đưa ra quyết định kinh doanh tốt hơn."</p>
+                <span class="testimonial-verified">
+                    <span class="material-symbols-outlined">verified</span>
+                    Đã xác minh
+                </span>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img class="testimonial-avatar" src="avatars/nguyen-minh.png" alt="Nguyễn Minh">
+                    <div class="testimonial-info">
+                        <span class="testimonial-name">Nguyễn Minh</span>
+                        <span class="testimonial-role">Kỹ sư IT, TP.HCM</span>
+                    </div>
+                    <div class="testimonial-rating">
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">"Thuật toán AI kết hợp với tử vi cổ truyền tạo ra kết quả bất ngờ chính xác.
+                    Rất ấn tượng!"</p>
+                <span class="testimonial-verified">
+                    <span class="material-symbols-outlined">verified</span>
+                    Đã xác minh
+                </span>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img class="testimonial-avatar" src="avatars/le-thao.png" alt="Lê Thảo">
+                    <div class="testimonial-info">
+                        <span class="testimonial-name">Lê Thảo</span>
+                        <span class="testimonial-role">Giáo viên, Đà Nẵng</span>
+                    </div>
+                    <div class="testimonial-rating">
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">star_half</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">"Giao diện đẹp, dễ sử dụng. Bình giải chi tiết giúp hiểu rõ về bản thân và
+                    gia đình."</p>
+                <span class="testimonial-verified">
+                    <span class="material-symbols-outlined">verified</span>
+                    Đã xác minh
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section (Authority Bias) -->
+<section class="statistics">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">{{ statLaSo().toLocaleString() }}</span>
+                <span class="stat-label">Lá số đã lập</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ statHaiLong() }}</span>
+                <span class="stat-suffix">%</span>
+                <span class="stat-label">Độ hài lòng</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ statKinhNghiem() }}</span>
+                <span class="stat-suffix">+</span>
+                <span class="stat-label">Năm kinh nghiệm</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ statHoTro() }}</span>
+                <span class="stat-suffix">/7</span>
+                <span class="stat-label">Hỗ trợ khách hàng</span>
+            </div>
+        </div>
+    </div>
+</section>

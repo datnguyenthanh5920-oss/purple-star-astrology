@@ -1,0 +1,212 @@
+/* Navbar - Glassmorphism */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg,
+            rgba(20, 184, 166, 0.15) 0%,
+            rgba(30, 41, 59, 0.7) 50%,
+            rgba(212, 175, 55, 0.1) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.2);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    &.scrolled {
+        background: linear-gradient(135deg,
+                rgba(20, 184, 166, 0.2) 0%,
+                rgba(15, 23, 42, 0.9) 100%);
+        border-bottom-color: rgba(20, 184, 166, 0.4);
+        box-shadow:
+            0 8px 32px rgba(20, 184, 166, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+
+    .logo-icon {
+        color: var(--primary);
+        font-size: 1.75rem;
+        animation: logoGlow 2s ease-in-out infinite;
+    }
+}
+
+/* Desktop Nav Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-secondary);
+    position: relative;
+    padding: 0.5rem 0;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        transition: width var(--transition-medium);
+    }
+
+    &:hover,
+    &.active {
+        color: var(--text-primary);
+
+        &::after {
+            width: 100%;
+        }
+    }
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+
+    /* Hide desktop nav by default */
+    .nav-links {
+        display: none;
+    }
+
+    /* Show mobile menu button */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1002;
+    }
+
+    /* Mobile menu open - fullscreen overlay */
+    .nav-links.show {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        /* Dynamic viewport height for mobile browsers */
+        /* Solid background with gradient overlay */
+        background:
+            linear-gradient(180deg,
+                rgba(20, 184, 166, 0.2) 0%,
+                transparent 20%,
+                transparent 80%,
+                rgba(212, 175, 55, 0.15) 100%),
+            rgb(15, 23, 42);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        padding: 5rem 2rem 2rem;
+        /* Top padding for navbar */
+        gap: 0.5rem;
+        z-index: 1001;
+        animation: slideIn 0.3s ease;
+        overflow-y: auto;
+
+        li {
+            list-style: none;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.15);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .nav-link {
+            display: block;
+            padding: 1.25rem 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+
+            &::after {
+                display: none;
+            }
+
+            &:hover {
+                color: var(--primary-light);
+                background: rgba(20, 184, 166, 0.1);
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.875rem 1rem;
+    }
+
+    .logo {
+        font-size: 1.25rem;
+
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+    }
+}

@@ -1,0 +1,523 @@
+/* ========================================
+   TỬ VI HUYỀN BÍ - ANGULAR VERSION
+   Design: Inter + Deep Teal + Gold + Glassmorphism
+   Angular Material Dark Theme
+   ======================================== */
+
+@use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Angular Material Custom Dark Theme */
+html {
+    height: 100%;
+    @include mat.theme((color: (theme-type: dark,
+                primary: mat.$cyan-palette,
+                tertiary: mat.$yellow-palette,
+            ),
+            typography: Inter,
+            density: 0,
+        ));
+}
+
+/* CSS Variables - Deep Teal + Gold Theme (Purple Ban Compliant) */
+:root {
+    /* Primary: Deep Teal - Mysterious, wise, calming */
+    --primary: #0D9488;
+    --primary-light: #14B8A6;
+    --primary-dark: #0F766E;
+    --primary-glow: rgba(13, 148, 136, 0.4);
+
+    /* Accent: Gold - Prosperity, fortune, luxury */
+    --accent: #D4AF37;
+    --accent-light: #E5C158;
+    --accent-dark: #B8960C;
+    --accent-glow: rgba(212, 175, 55, 0.4);
+
+    /* Backgrounds - Glassmorphism Enhanced */
+    --bg-dark: #0C1015;
+    --bg-card: rgba(18, 26, 32, 0.65);
+    --bg-card-glass: rgba(255, 255, 255, 0.03);
+    --bg-input: rgba(28, 38, 46, 0.7);
+
+    /* Text - Warmer tones */
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+
+    /* Glassmorphism */
+    --glass-blur: blur(20px);
+    --glass-blur-heavy: blur(40px);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    /* Borders & Effects */
+    --border-color: rgba(13, 148, 136, 0.25);
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
+
+    /* Typography */
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Trust & Status Colors */
+    --success: #22C55E;
+    --warning: #EAB308;
+    --error: #EF4444;
+    --info: #0EA5E9;
+
+    /* Material Overrides */
+    --mdc-filled-text-field-container-color: var(--bg-input);
+    --mdc-outlined-text-field-outline-color: var(--border-color);
+    --mat-datepicker-calendar-container-background-color: var(--bg-card);
+    --mat-select-panel-background-color: var(--bg-dark);
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    color-scheme: dark;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    margin: 0;
+    /* Better font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    letter-spacing: -0.011em;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* ========================================
+   ANGULAR MATERIAL CUSTOM STYLES
+   ======================================== */
+
+/* Global MDC Shape Override */
+:root {
+    --mdc-outlined-text-field-container-shape: 12px;
+}
+
+/* Mat Form Field - Dark Theme */
+.mat-mdc-form-field {
+    --mdc-filled-text-field-container-color: var(--bg-input);
+    --mdc-outlined-text-field-outline-color: var(--border-color);
+    --mdc-filled-text-field-label-text-color: var(--text-secondary);
+    --mdc-filled-text-field-input-text-color: var(--text-primary);
+    --mdc-outlined-text-field-container-shape: 12px;
+    width: 100%;
+}
+
+/* Force border-radius on outlined fields */
+.mdc-text-field--outlined {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.mdc-notched-outline__leading {
+    border-radius: 12px 0 0 12px !important;
+    width: 12px !important;
+}
+
+.mdc-notched-outline__trailing {
+    border-radius: 0 12px 12px 0 !important;
+}
+
+.mat-mdc-text-field-wrapper {
+    background: var(--bg-input) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(10px);
+}
+
+.mat-mdc-form-field-focus-overlay {
+    background: transparent !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: var(--bg-input) !important;
+}
+
+/* Mat Select */
+.mat-mdc-select {
+    --mat-select-trigger-text-color: var(--text-primary);
+    --mat-select-placeholder-text-color: var(--text-muted);
+}
+
+.mat-mdc-select-panel {
+    background: var(--bg-dark) !important;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius) !important;
+    backdrop-filter: blur(20px);
+}
+
+.mat-mdc-option {
+    --mat-option-label-text-color: var(--text-primary);
+
+    &:hover {
+        background: rgba(13, 148, 136, 0.2) !important;
+    }
+
+    &.mat-mdc-option-active {
+        background: rgba(13, 148, 136, 0.3) !important;
+    }
+}
+
+/* Mat Datepicker */
+.mat-datepicker-content {
+    background: var(--bg-dark) !important;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius) !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+.mat-calendar {
+    background: transparent;
+}
+
+.mat-calendar-header {
+    background: rgba(13, 148, 136, 0.1);
+}
+
+.mat-calendar-body-cell-content {
+    color: var(--text-primary);
+
+    &:hover {
+        background: rgba(13, 148, 136, 0.3) !important;
+    }
+}
+
+.mat-calendar-body-selected {
+    background: var(--primary) !important;
+    color: white !important;
+}
+
+.mat-calendar-body-today {
+    border-color: var(--accent) !important;
+}
+
+/* ========================================
+   COSMIC BACKGROUND ANIMATION
+   ======================================== */
+.cosmic-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.stars,
+.stars2,
+.stars3 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat;
+}
+
+.stars {
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 160px 120px, #fff, transparent);
+    background-size: 200px 200px;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.stars2 {
+    background-image:
+        radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(2px 2px at 100px 50px, #fff, transparent),
+        radial-gradient(1px 1px at 180px 140px, rgba(255, 255, 255, 0.5), transparent);
+    background-size: 250px 250px;
+    animation: twinkle 6s ease-in-out infinite 1s;
+}
+
+.stars3 {
+    background-image:
+        radial-gradient(1px 1px at 80px 100px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(2px 2px at 150px 180px, #fff, transparent);
+    background-size: 300px 300px;
+    animation: twinkle 8s ease-in-out infinite 2s;
+}
+
+.cosmic-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150vmax;
+    height: 150vmax;
+    transform: translate(-50%, -50%);
+    background:
+        radial-gradient(ellipse at center,
+            rgba(13, 148, 136, 0.15) 0%,
+            rgba(212, 175, 55, 0.08) 30%,
+            transparent 70%);
+    animation: cosmicPulse 8s ease-in-out infinite;
+}
+
+/* Glassmorphism Gradient Orbs */
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: orbFloat 20s ease-in-out infinite;
+}
+
+.gradient-orb-1 {
+    width: 600px;
+    height: 600px;
+    top: -10%;
+    right: -5%;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.4) 0%, transparent 70%);
+    animation-delay: 0s;
+}
+
+.gradient-orb-2 {
+    width: 500px;
+    height: 500px;
+    bottom: 20%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, transparent 70%);
+    animation-delay: -5s;
+}
+
+.gradient-orb-3 {
+    width: 400px;
+    height: 400px;
+    top: 40%;
+    right: 20%;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, transparent 70%);
+    animation-delay: -10s;
+}
+
+.gradient-orb-4 {
+    width: 350px;
+    height: 350px;
+    bottom: -5%;
+    right: 30%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+    animation-delay: -15s;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(30px, -20px) scale(1.05);
+    }
+
+    50% {
+        transform: translate(-20px, 30px) scale(0.95);
+    }
+
+    75% {
+        transform: translate(20px, 20px) scale(1.02);
+    }
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes cosmicPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes logoGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    50% {
+        text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary-glow);
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text {
+    display: block;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 50%, var(--accent-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: rgba(20, 20, 30, 0.95);
+    border-radius: 12px;
+    border: 1px solid rgba(13, 148, 136, 0.3);
+    backdrop-filter: blur(20px);
+    color: white;
+    z-index: 10000;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.3s ease;
+
+    &.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    &.toast-success {
+        border-color: var(--success);
+
+        .material-symbols-outlined {
+            color: var(--success);
+        }
+    }
+
+    &.toast-error {
+        border-color: var(--error);
+
+        .material-symbols-outlined {
+            color: var(--error);
+        }
+    }
+}
+
+/* Mobile menu styles */
+@media (max-width: 768px) {
+    .nav-links.show {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(10, 10, 15, 0.98);
+        padding: 2rem;
+        gap: 1.5rem;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

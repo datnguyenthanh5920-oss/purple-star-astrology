@@ -1,0 +1,21 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <a routerLink="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Tử Vi Huyền Bí</span>
+        </a>
+        <ul class="nav-links" [class.show]="mobileMenuOpen()">
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link"
+                    (click)="closeMobileMenu()">Trang chủ</a></li>
+            <li><a routerLink="/kien-thuc" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Kiến
+                    thức</a></li>
+            <li><a routerLink="/dich-vu" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Dịch
+                    vụ</a></li>
+            <li><a routerLink="/lien-he" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Liên
+                    hệ</a></li>
+        </ul>
+        <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+            <span class="material-symbols-outlined">{{ mobileMenuOpen() ? 'close' : 'menu' }}</span>
+        </button>
+    </div>
+</nav>

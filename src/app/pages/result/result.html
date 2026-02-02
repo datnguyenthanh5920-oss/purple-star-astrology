@@ -1,0 +1,180 @@
+<div class="result-page">
+    @if (isLoading()) {
+    <div class="loading-container">
+        <div class="loading-spinner">
+            <span class="material-symbols-outlined rotating">autorenew</span>
+        </div>
+        <p>Đang phân tích lá số của bạn...</p>
+    </div>
+    } @else {
+    <div class="container">
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <span class="avatar-glyph">{{ formData()?.fullName?.charAt(0) || 'T' }}</span>
+                </div>
+                <div class="profile-info">
+                    <h1 class="profile-name">{{ formData()?.fullName }}</h1>
+                    <div class="profile-dates">
+                        <span class="date-item">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            Dương lịch: {{ formData()?.birthDate }}
+                        </span>
+                        <span class="date-item lunar">
+                            <span class="material-symbols-outlined">dark_mode</span>
+                            Âm lịch: (Sẽ được tính toán)
+                        </span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="action-btn" (click)="printResult()">
+                        <span class="material-symbols-outlined">print</span>
+                        In
+                    </button>
+                    <button class="action-btn" (click)="shareResult()">
+                        <span class="material-symbols-outlined">share</span>
+                        Chia sẻ
+                    </button>
+                </div>
+            </div>
+            <div class="profile-quote">
+                <span class="quote-icon">"</span>
+                <p>Đức năng thắng số, nhân định thắng thiên</p>
+            </div>
+        </div>
+
+        <!-- Result Grid -->
+        <div class="result-grid">
+            <div class="result-column">
+                <!-- Fortune Card -->
+                <div class="insight-card fortune-card">
+                    <div class="card-header">
+                        <h2>
+                            <span class="material-symbols-outlined">stars</span>
+                            Vận Mệnh Tổng Quan
+                        </h2>
+                        <span class="card-badge good">Tốt</span>
+                    </div>
+                    <div class="fortune-meter">
+                        <div class="meter-track">
+                            <div class="meter-fill" [style.width.%]="fortuneLevel()"></div>
+                        </div>
+                        <div class="meter-labels">
+                            <span>Xấu</span>
+                            <span>Trung bình</span>
+                            <span>Tốt</span>
+                        </div>
+                    </div>
+                    <div class="fortune-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Công danh</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="stat-value">85%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tình duyên</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 72%"></div>
+                            </div>
+                            <span class="stat-value">72%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tài lộc</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 68%"></div>
+                            </div>
+                            <span class="stat-value">68%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Sức khỏe</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 90%"></div>
+                            </div>
+                            <span class="stat-value">90%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interpretation Card -->
+                <div class="insight-card">
+                    <div class="card-header">
+                        <h2>
+                            <span class="material-symbols-outlined">auto_stories</span>
+                            Giải Đoán Chi Tiết
+                        </h2>
+                    </div>
+                    <div class="interpretation-content">
+                        <div class="interpretation-section">
+                            <h3>
+                                <span class="section-icon">🏛️</span>
+                                Mệnh Cung
+                            </h3>
+                            <p>
+                                Mệnh cung của bạn có <strong>Tử Vi</strong> tọa thủ, đây là cách tốt nhất trong Tử Vi
+                                Đẩu Số.
+                                Người có mệnh này thường có tư cách lãnh đạo, được người khác tôn trọng.
+                            </p>
+                        </div>
+                        <div class="interpretation-section">
+                            <h3>
+                                <span class="section-icon">💼</span>
+                                Sự Nghiệp
+                            </h3>
+                            <p>
+                                Quan lộc cung có <strong>Thiên Phủ</strong> chiếu, cho thấy sự nghiệp vững vàng,
+                                có thể phát triển trong các lĩnh vực quản lý, tài chính hoặc kinh doanh.
+                            </p>
+                        </div>
+                        <div class="interpretation-section">
+                            <h3>
+                                <span class="section-icon">❤️</span>
+                                Tình Duyên
+                            </h3>
+                            <p>
+                                Phu thê cung có <strong>Thái Âm</strong> tọa thủ, tình duyên êm đềm,
+                                phù hợp với người có tính cách điềm tĩnh, hiền lành.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-column">
+                <!-- Chart Card (Placeholder) -->
+                <div class="insight-card chart-card">
+                    <div class="card-header">
+                        <h2>
+                            <span class="material-symbols-outlined">grid_view</span>
+                            Lá Số Tử Vi
+                        </h2>
+                    </div>
+                    <div class="chart-placeholder">
+                        <div class="placeholder-grid">
+                            @for (i of [1,2,3,4,5,6,7,8,9,10,11,12]; track i) {
+                            <div class="palace-cell">
+                                <span class="palace-name">Cung {{ i }}</span>
+                            </div>
+                            }
+                        </div>
+                        <p class="placeholder-note">
+                            <span class="material-symbols-outlined">info</span>
+                            Lá số chi tiết sẽ được hiển thị khi kết nối với backend
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="back-section">
+            <button class="back-btn" (click)="goBack()">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Lập lá số mới
+            </button>
+        </div>
+    </div>
+    }
+</div>
