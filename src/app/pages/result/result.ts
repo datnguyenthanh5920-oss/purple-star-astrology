@@ -227,12 +227,14 @@ export class Result implements OnInit {
   }
 
   // Update horoscope when year changes
+  // TODO: Implement year-based horoscope recalculation in new service
   onYearChange() {
     const chart = this.tuViChart();
-    if (!chart?.rawAstrolabe) return;
+    if (!chart) return;
 
-    const newHoroscope = this.tuViService.getHoroscope(chart.rawAstrolabe, this.selectedYear);
-    this.tuViChart.update(c => c ? { ...c, horoscope: newHoroscope } : c);
+    // For now, just log the selected year
+    // Full horoscope recalculation will be added in future iteration
+    console.log('Selected year:', this.selectedYear);
   }
 
   goBack() {
